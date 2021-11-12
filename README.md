@@ -16,7 +16,7 @@ Planeeritud funktsionaalsusteks on:
     * Retsepti detailne vaade, mis avaneb retseptile vajutades
     * Kasutaja leht, kus näed teise kasutaja postitatud retsepte
     * Personaalse kasutaja leht, kus näed enda retsepte
-    * Sisselogimise / registeerimise leht
+    * Sisselogimise / registreerimise leht
     * Profiili redigeerimise leht, kus on võimalik:
         * Muuta profiilipilti
         * Muuta emaili
