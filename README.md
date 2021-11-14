@@ -24,6 +24,7 @@ Planeeritud funktsionaalsusteks on:
         * Muuta parooli (kinnitusega)
         * Muuta, kas soovid emailile teateid 
         * Muuta, kas soovid profiili privaatseks sättida
+    * Jälgitavate kasutajate leht
     * Otsingumootori leht
 
 ## Wireframe
