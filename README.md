@@ -14,26 +14,18 @@ Planeeritud funktsionaalsusteks on:
     * Pealeht, kus on uuemad populaarsemad retseptid
         * Filtreeritav uuteks retseptideks, kõige rohkem hinnatud retseptideks ja ainult jälgitud kasutajate postitatud retseptideks
     * Retsepti detailne vaade, mis avaneb retseptile vajutades
-<<<<<<< HEAD
     * Kasutaja leht, kus näed teise kasutaja postitatud retsepte
     * Personaalse kasutaja leht, kus näed enda retsepte
     * Sisselogimise / registeerimise leht
-=======
     * Retsepti postitamise leht
     * Kasutaja leht, kus näed teise kasutaja postitatud retsepte
-    * Personaalse kasutaja leht, kus näed enda retsepte
-    * Sisselogimise / registreerimise leht
->>>>>>> teamrecipe/main
     * Profiili redigeerimise leht, kus on võimalik:
         * Muuta profiilipilti
         * Muuta emaili
         * Muuta parooli (kinnitusega)
         * Muuta, kas soovid emailile teateid 
         * Muuta, kas soovid profiili privaatseks sättida
-<<<<<<< HEAD
-=======
     * Jälgitavate kasutajate retseptide leht
->>>>>>> teamrecipe/main
     * Otsingumootori leht
 
 ## Wireframe
@@ -48,8 +40,4 @@ Link: https://xd.adobe.com/view/f40ee937-dd1d-4eb6-a733-f374cebccaed-a15d/?fulls
 ## Autorid
 
 * Oliver Labi
-<<<<<<< HEAD
 * Alex Nelke
-=======
-* Alex Nelke
->>>>>>> teamrecipe/main
