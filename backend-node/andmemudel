@@ -1,0 +1,34 @@
+User
+-userID int PK
+-userName varchar(50) REQ
+-email varchar(100) REQ 
+-password varchar REQ
+-firstName varchar(75) REQ
+-lastName varchar(75) REQ
+-profilePicture varchar REQ
+-privacy boolean REQ
+-emailNotifications boolean REQ
+-createdAt date
+
+Recipe
+-recipeID int PK
+-userID int REQ FK
+-recipeName varchar(75) REQ
+-recipeDescription varchar(300) REQ
+-recipeSteps varchar(1000) REQ
+-recipePicture NULL
+-createdAt 
+
+Ingredient
+-ingredientID PK
+-recipeID FK
+-ingredientName varchar(75) REQ
+-ingredientAmount int REQ
+
+Following
+-UserID int FK
+-FolloweeID int FK
+
+Liking
+-UserID int FK 
+-RecipeID int FK

@@ -14,10 +14,11 @@ Planeeritud funktsionaalsusteks on:
     * Pealeht, kus on uuemad populaarsemad retseptid
         * Filtreeritav uuteks retseptideks, kõige rohkem hinnatud retseptideks ja ainult jälgitud kasutajate postitatud retseptideks
     * Retsepti detailne vaade, mis avaneb retseptile vajutades
-    * Retsepti postitamise leht
     * Kasutaja leht, kus näed teise kasutaja postitatud retsepte
     * Personaalse kasutaja leht, kus näed enda retsepte
-    * Sisselogimise / registreerimise leht
+    * Sisselogimise / registeerimise leht
+    * Retsepti postitamise leht
+    * Kasutaja leht, kus näed teise kasutaja postitatud retsepte
     * Profiili redigeerimise leht, kus on võimalik:
         * Muuta profiilipilti
         * Muuta emaili
