@@ -1,15 +1,35 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import Header from './components/Header';
-import Main from "./pages/Main";
-
+import RecipePage from "./pages/RecipePage";
+import SearchPage from "./pages/SearchPage";
+import Registration from "./components/Registration";
+import AccountPage from "./pages/AccountPage";
+import AccountPageEdit from "./pages/AccountPageEdit";
+import RecipeDetailedPage from "./pages/RecipeDetailedPage";
+import CookbookPage from "./pages/CookbookPage";
+import FollowedRecipes from "./components/FollowedRecipes";
+import RecipeCreate from "./pages/RecipeCreate";
 
 function App() {
   return (
     <BrowserRouter>
       <Route path="/" component={Header} />
-      <Switch>
-        <Route exact path="/" component={Main}/>
-      </Switch>
+      <div className="content">
+        <div className="content-border">
+          <Switch>
+            <Route exact path="/recipes" component={RecipePage}/>
+            <Route exact path="/create" component={RecipeCreate}/>
+            <Route exact path="/recipes/:recipeid" component={RecipeDetailedPage}/>
+            <Route exact path="/cookbook" component={CookbookPage}/>
+            <Route exact path="/search" component={SearchPage}/>
+            <Route exact path="/account" component={AccountPage}/>
+            <Route exact path="/account/registration" component={Registration} />
+            <Route exact path="/account/edit" component={AccountPageEdit} />
+          </Switch>
+          <h1 className="footer"></h1>
+        </div>
+      </div>
     </BrowserRouter>
   );
 }

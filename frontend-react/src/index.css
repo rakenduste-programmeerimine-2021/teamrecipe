@@ -36,7 +36,42 @@ code {
 }
 
 .footer {
-  border-top: #141414;
+  border-top: rgb(199, 199, 199);
   border-top-style: solid;
-  margin: 0px -35px 0px -35px;
+  margin: 10px 10% 10px 10%;
+  border-width: 2px;
+}
+
+.content {
+  padding-bottom: 20px;
+  padding-inline: 10%;
+  text-align: center;
+}
+
+.content-border {
+  display: inline-block;
+  max-inline-size: 1500px;
+  background-color: white;
+  border-color: rgb(199, 199, 199);
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  padding: 20px;
+}
+
+.dynamic-delete-button {
+  position: relative;
+  top: 4px;
+  margin: 0 8px;
+  color: #999;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.dynamic-delete-button:hover {
+  color: #777;
+}
+.dynamic-delete-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
