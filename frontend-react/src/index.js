@@ -11,9 +11,8 @@ ReactDOM.render(
   <React.StrictMode>
         <Layout>
           <Content>
-            <App />
+              <App />
           </Content>
-          <Footer><h1 className="footer">Application programming</h1></Footer>
         </Layout>
   </React.StrictMode>,
   document.getElementById('root'),
