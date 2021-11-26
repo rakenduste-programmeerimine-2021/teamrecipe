@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 import Header from './components/Header';
 import RecipePage from "./pages/RecipePage";
 import SearchPage from "./pages/SearchPage";
@@ -8,8 +7,8 @@ import AccountPage from "./pages/AccountPage";
 import AccountPageEdit from "./pages/AccountPageEdit";
 import RecipeDetailedPage from "./pages/RecipeDetailedPage";
 import CookbookPage from "./pages/CookbookPage";
-import FollowedRecipes from "./components/FollowedRecipes";
 import RecipeCreate from "./pages/RecipeCreate";
+import "./App.less"
 
 function App() {
   return (

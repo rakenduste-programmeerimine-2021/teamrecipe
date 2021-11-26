@@ -1,60 +1,106 @@
-import { Form, Input, Button } from 'antd';
+import { useContext } from "react"
+import { Context } from "../store";
+import { Form, Input, Button, message } from 'antd';
 import { Link } from 'react-router-dom';
-import "../components/InputStyles.css";
+import { loginUser } from "../store/actions";
 
 function Login(){
+    const [state, dispatch] = useContext(Context)
+    console.log(state)
 
-
-    return (
-        <div>
-        <h1 style={{fontWeight:"700"}}>Log In</h1>
-        <Form 
-        name="basic"
-        //labelCol={{span: 8}}
-        //wrapperCol={{span: 8}}
-        initialValues={{remember: true,}}
-        autoComplete="off"
-        style={{ margin:"30px"}}
-        >
-        <br/>
-        <h1>Email</h1>
-        <Form.Item
-            label=""
-            name="email"
-            rules={[
-            {
-                required: true,
-                message: 'Please input your email!',
-            },
-            ]}
-        >
-            <Input style={{backgroundColor:"lightgray"}}/>
-        </Form.Item>
-        <h1>Password</h1>
-        <Form.Item
-            label=""
-            name="password"
-            rules={[
-            {
-                required: true,
-                message: 'Please input your password!',
-            },
-            {
-                min: 6,
-                message: 'Minimum length is 6 characters!',
+    const onFinish = (values) => {
+        const loginAttempt = {
+            userName: values.userName,
+            password: values.password,
+        };
+        fetch("http://localhost:8081/api/auth/login/",{
+            method: "POST",
+            body: JSON.stringify(loginAttempt),
+            headers: {"Content-Type":"application/json"}
+        }).then((response) => {
+            if(response.ok){
+                fetchUserData(loginAttempt)
+            } else {
+                throw new Error("Invalid credentials!");
             }
-            ]}
-        >
-            <Input.Password className="color" style={{backgroundColor:"lightgray"}}/>
-        </Form.Item>
-        <br/>
-        <Form.Item wrapperCol={{}}>
-            <Button type="primary" htmlType="login" style={{width:"150px", background: "#fadb14", color: "black", border:"none", fontWeight:"700"}}>
-            Login
-            </Button>
-        </Form.Item>
-        </Form>
-        <Link to="account/registration">Create a new account</Link>
+        }).catch(error => {
+            displayError(error)
+        });
+    }
+
+    function fetchUserData(loginAttempt){
+        fetch("http://localhost:8081/api/auth/" + loginAttempt.userName)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            const loginState = {
+                username: loginAttempt.userName,
+                token: data.password
+            }
+            dispatch(loginUser(loginState))
+            displaySuccess("Successful login!")
+        }).catch(error => {
+            displayError(error)
+        });
+    }
+
+    const displayError = (error) => {
+        message.error(error.toString());
+    }
+
+    const displaySuccess = (success) => {
+        message.success(success);
+    }
+    
+    return (
+        <div style={{width:"350px"}}>
+            <h1 style={{fontWeight:"700"}}>Log In</h1>
+            <Form 
+                name="basic"
+                initialValues={{remember: true,}}
+                autoComplete="off"
+                style={{ margin:"30px"}}
+                onFinish={onFinish}
+            >
+            <br/>
+            <h1>Username</h1>
+            <Form.Item
+                name="userName"
+                rules={[
+                {
+                    required: true,
+                    message: 'Please input your username!',
+                },
+                ]}
+            >
+                <Input/>
+            </Form.Item>
+            <h1>Password</h1>
+            <Form.Item
+                label=""
+                name="password"
+                rules={[
+                {
+                    required: true,
+                    message: 'Please input your password!',
+                },
+                {
+                    min: 6,
+                    message: 'Minimum length is 6 characters!',
+                }
+                ]}
+            >
+                <Input.Password/>
+            </Form.Item>
+            <br/>
+            <Form.Item wrapperCol={{}}>
+                <Button type="primary" htmlType="login">
+                Login
+                </Button>
+            </Form.Item>
+            </Form>
+            <Link to="account/registration">Create a new account</Link>
         </div>
     );
 };

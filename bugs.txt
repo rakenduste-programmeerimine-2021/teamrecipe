@@ -1,0 +1,16 @@
+bugs:
+
+Registration:
+registration page popups do not show the correct error message from backend
+registration page password input validation regex invalid
+
+tegemata:
+retsepti loomisel luua throw errorid backendis
+retsepti piltide uploadimine nii frontendis kui ka backendis tegemata
+
+
+notes:
+
+craco.config.js kaudu muutsin uldise lehe stiili ant designil ära, ehk ei tule
+manuaalselt muuta enam buttoneid jne
+kui tahad ka midagi muuta ss aitab lehekulg https://antdtheme.com/ ning https://ant.design/docs/react/customize-theme
