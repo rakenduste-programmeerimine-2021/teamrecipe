@@ -1,45 +1,39 @@
-import { Button } from "antd"
-import React from "react"
-import Login from "../components/Login"
-import { useState } from "react"
-
+import { useState, useContext } from "react";
+import { Context } from "../store";
+import { Button } from "antd";
+import { Link } from "react-router-dom";
+import React from "react";
+import Login from "../components/Login";
+import { logoutUser } from "../store/actions";
 
 function AccountPage(){
-    const [state, setState] = useState("")
-    const [user, setUser] = useState(true)
+    const [state, dispatch] = useContext(Context);
 
-    function checkLogin(){
-        if(user === false){
-            return ( //kui pole sisse logitud
-                <Login></Login>
-            )
-        } else {
-            return ( //sisse logitud
-                <div style={{padding:"10px 30px", width:"400px"}}>
-                    <h1 style={{fontWeight:"700"}}>Account</h1>
-                    <div>
-                        <h2>/Picture here/</h2>
-                    <div style={{textAlign:"left"}}>
-                        <h2>Firstname: </h2>
-                        <h2>Lastname: </h2>
-                        <h2>Email: </h2>
-                        <h2></h2>
-                        <h2></h2>
-                    </div>
-                    </div>
-                    <br/>
-                    <Button type="default" htmlType="button" style={{width:"150px", background: "#fadb14", color: "black", border:"none", fontWeight:"700"}}>Edit account</Button>
-                    <h1>My recipes</h1>
-                    <Button type="default" htmlType="button" style={{width:"150px", background: "#fadb14", color: "black", border:"none", fontWeight:"700"}}>My recipes</Button>
-                    <h1>Log out from this account</h1>
-                    <Button type="default" htmlType="logout" style={{width:"150px", background: "#fadb14", color: "black", border:"none", fontWeight:"700"}}>Logout</Button>
-                    <br/>
-                </div>
-            )
-        }
+    function logout(){
+        dispatch(logoutUser());
     }
 
-    return checkLogin();
+    if(state.auth.token == undefined){
+        return ( //kui pole sisse logitud
+            <Login></Login>
+        )
+    } else {
+        return ( //kui on sisse logitud
+            <div style={{padding:"10px 30px", width:"400px"}}>
+                <h1 style={{fontWeight:"700"}}>Account</h1>
+                <svg width="100" height="100" style={{marginBottom: "10px"}}>
+                <rect width="100" height="100" style={{fill:"rgb(255,100,100)", strokeWidth:"3"}} />
+                </svg>
+                <br/>
+                <Button type="primary" htmlType="button">Edit account</Button><span><Button type="default" htmlType="logout" onClick={() => logout()} style={{marginLeft: "10px", marginBottom: "10px"}}>Logout</Button></span>
+                <h1>Recipes</h1>
+                
+                <p className="footer" style={{ margin: "10px 3% 10px 3%" }}/>
+                <Link to="/create" style={{ marginBottom: "10px" }}>Create a new recipe</Link>
+                <p> -- siia retseptid -- </p>
+            </div>
+        )
+    }
 }
 
 export default AccountPage

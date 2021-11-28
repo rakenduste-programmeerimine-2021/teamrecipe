@@ -16,8 +16,8 @@ services:
     ports: 
       - '27017:27017'
     environment: 
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_ROOT_USERNAME: teamrecipe
+      MONGO_INITDB_ROOT_PASSWORD: recipe21team
     container_name: 'mongo'
 
   backend-node:
@@ -29,7 +29,7 @@ services:
       - '8081:3000'
       - '9000:9000'
     environment: 
-      MONGODB_URI: mongodb://root:root@mongo/if20?authSource=admin
+      MONGODB_URI: mongodb://teamrecipe:recipe21team@mongo/teamrecipe?authSource=admin
     volumes: 
       - '../backend-node:/home/node/app:delegated'
     command: 'run dev'
