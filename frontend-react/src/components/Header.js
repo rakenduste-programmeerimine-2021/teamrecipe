@@ -7,7 +7,6 @@ function Header(){
     const history = useHistory();
     const handleKeyPress = (event) => {
         if (event.key === 'Enter'){
-            console.log("siin");
             history.replace("/search/")
         }
     }
