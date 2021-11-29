@@ -6,7 +6,6 @@ import React from "react";
 import Login from "../components/Login";
 import { logoutUser } from "../store/actions";
 import MyRecipes from "../components/MyRecipes";
-import AccountPageEdit from "./AccountPageEdit";
 
 function AccountPage(){
     const [state, dispatch] = useContext(Context);

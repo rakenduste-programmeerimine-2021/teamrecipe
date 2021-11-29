@@ -8,13 +8,7 @@ import { Link } from "react-router-dom";
 function MyRecipes(){
 
     const [state, dispatch] = useContext(Context);
-    const [requestData, setRequestData] = useState("");
     const [recipes, setRecipes] = useState([]);
-
-    const history = useHistory();
-    const routeChange = () =>{
-        history.replace("/recipes/:id")
-    }
 
     useEffect(() => {
         getRecipes();
@@ -37,7 +31,7 @@ function MyRecipes(){
             displayError(error)
         });
     }
-    }, [requestData])
+    }, [])
 
 
     const displayError = (error) => {
@@ -48,19 +42,19 @@ function MyRecipes(){
     return(
         <>
             <div>
-                {recipes.map((recipe, index) => ( 
+                {recipes.map((recipe, index) => (state.auth.username == recipe.userName && ( 
                     <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", padding: "10px", borderRadius: "5px", display: "inline-block", marginBottom: "10px", textAlign: "left"}} key={index}>
                         <span>
                             <Link to={`/recipes/${recipe.recipeID}`}>
-                            <b>{recipe.recipeName}</b>
+                            <b style={{color:"black"}}>{recipe.recipeName}</b>
                             </Link>
                             <Link to={`/user/`}>
-                            <p>author: {recipe.userName}</p>
+                            <p style={{color:"black"}}>author: {recipe.userName}</p>
                             </Link>
                             <p>{recipe.recipeDescription}</p>
                         </span>
                     </div>
-                ))}
+                )))}
             </div>
         </>
     )

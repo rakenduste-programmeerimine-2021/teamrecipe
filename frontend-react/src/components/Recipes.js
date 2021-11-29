@@ -11,14 +11,7 @@ import { Link } from "react-router-dom";
 function Recipes(){
 
     const [state, dispatch] = useContext(Context);
-    const [requestData, setRequestData] = useState("");
     const [recipes, setRecipes] = useState([]);
-
-    // const history = useHistory();
-    // const routeChange = () =>{
-    //     history.replace("/recipes/")
-    // }
-    // onClick={routeChange}
 
     useEffect(() => {
         getRecipes();
@@ -41,12 +34,13 @@ function Recipes(){
             displayError(error)
         });
     }
-    }, [requestData])
-
+    }, [])
 
     const displayError = (error) => {
     message.error(error.toString());
   }
+
+
 
     // const [recipes, setRecipes] = useState(null);
 
@@ -60,10 +54,7 @@ function Recipes(){
     //         console.log(data);
     // }
     // }, []);
-
-
-
-    function allRecipes(){
+    
         return(
         <>
             <h1 style={{fontWeight:"700"}}>Recipes</h1>
@@ -94,9 +85,6 @@ function Recipes(){
             </div>
         </>
         )
-    }
-
-    return allRecipes()
     
 }
 

@@ -9,7 +9,7 @@ require("dotenv").config();
 
 const authRoutes = require('./routes/auth');
 const recipeRoutes = require('./routes/recipe');
-// const userRoutes = require('./routes/user'); - teised kasutajad, uus andmemudel
+
 
 const app = express()
 app.use(express.json());
@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/recipe', recipeRoutes);
-// app.use('/api/user', userRoutes);
+
 
 app.get('*', (req, res) => {
   res.send('This route does not exist')

@@ -8,7 +8,7 @@ import AccountPageEdit from "./pages/AccountPageEdit";
 import RecipeDetailedPage from "./pages/RecipeDetailedPage";
 import CookbookPage from "./pages/CookbookPage";
 import RecipeCreate from "./pages/RecipeCreate";
-// import OtherUserPage from "./pages/OtherUserPage";
+import OtherUserPage from "./pages/OtherUserPage";
 import "./App.less"
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
       <div className="content">
         <div className="content-border">
           <Switch>
+            <Route exact path="/" component={RecipePage}/>
             <Route exact path="/recipes" component={RecipePage}/>
             <Route exact path="/create" component={RecipeCreate}/>
             <Route exact path="/recipes/:recipeID" component={RecipeDetailedPage}/>
@@ -26,7 +27,7 @@ function App() {
             <Route exact path="/account" component={AccountPage}/>
             <Route exact path="/account/registration" component={Registration} />
             <Route exact path="/account/edit" component={AccountPageEdit} />
-            {/* <Route exact path="/user/:userName" component={OtherUserPage} /> */}
+            <Route exact path="/:userName" component={OtherUserPage} />
           </Switch>
           <h1 className="footer"></h1>
         </div>

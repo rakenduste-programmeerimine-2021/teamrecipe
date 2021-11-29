@@ -1,7 +1,29 @@
 import React from "react";
 import MyRecipes from "../components/MyRecipes";
+import { Context } from "../store"
+import { useEffect, useState, useContext } from "react"
+import { useParams } from "react-router";
 
 function OtherUserPage(){
+
+    // const [state, dispatch] = useContext(Context);
+    // const [requestData, setRequestData] = useState("");
+    // const [user, setUser] = useState([]);
+    // const {userName} = useParams();
+
+    //     useEffect(() => {
+    //     getUser();
+
+    //     async function getUser(){
+    //         const response = await fetch("http://localhost:8081/api/auth/signup" + userName)
+    //         const data = await response.json();
+    //         console.log(response)
+    //         console.log(data)
+    //         setUser(data);
+    //         console.log(data)
+
+    // }
+    // }, []);
 
         return (
             <div style={{padding:"10px 30px", width:"400px"}}>

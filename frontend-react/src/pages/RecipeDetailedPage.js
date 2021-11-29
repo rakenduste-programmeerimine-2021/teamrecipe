@@ -9,50 +9,16 @@ import { useParams } from "react-router";
 
 function RecipePage(){
 
-    const [state, dispatch] = useContext(Context);
-    const [requestData, setRequestData] = useState("");
-    const [recipes, setRecipes] = useState([]);
+    // const [state, dispatch] = useContext(Context);
+    // const [requestData, setRequestData] = useState("");
+    // const [recipes, setRecipes] = useState([]);
+    const [loading, setLoading] = useState(false)
     const {recipeID} = useParams();
 
-        useEffect(() => {
-        getRecipe();
+    // useEffect(() => {
+    //     setLoading(true)
+    // }, [recipeID])
 
-        async function getRecipe(){
-        fetch("http://localhost:8081/api/recipe/" + recipeID)
-        .then(response => {
-            if(response.ok){
-                return response.json();
-            } else {
-                throw new Error("error fetching");
-            }
-        })
-        .then(data => {
-            console.log(data);
-            dispatch(updateRecipes(data));
-            setRecipes(data);
-        })
-        .catch(error => {
-            displayError(error)
-        });
-    }
-    }, [requestData])
-
-        const displayError = (error) => {
-    message.error(error.toString());
-  }
-
-    // const dataSource = [
-    // {
-    //     key: '1',
-    //     ingredient: 'Chicken',
-    //     amount: '1 kg',
-    // },
-    // {
-    //     key: '2',
-    //     ingredient: 'Panko Breadcrumbs',
-    //     amount: '200 g',
-    // }
-    // ]
 
     const columns = [
     {
@@ -69,16 +35,16 @@ function RecipePage(){
 
     return(
         <>
-        <h2>id - {recipeID}</h2>
+        <h2>{recipeID}</h2>
         <img src={Image} alt="Chicken" width="300" height="300" style={{marginBottom: "10px"}}/>
         <h1 style={{fontWeight:"700"}}>title</h1>
-        <p><b>Author:</b></p>
-        <p>body</p>
+        <p><b>Author: </b></p>
+        <p></p>
         <Table columns={columns} size="small" pagination="hideOnSinglePage"/>
         <h2 style={{fontWeight:"700"}}>STEP 1</h2>
-        <p>Step 1 tekst jne</p>
+        <p></p>
         <h2 style={{fontWeight:"700"}}>STEP 2</h2>
-        <p>Step 2 tekst jne</p>
+        <p></p>
         </>
     );
 }
