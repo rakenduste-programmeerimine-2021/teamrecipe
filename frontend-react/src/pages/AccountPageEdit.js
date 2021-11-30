@@ -26,7 +26,7 @@ function AccountPageEdit(){
                     },
                     ]}
                 >
-                    <Input style={{backgroundColor:"lightgray"}}/>
+                    <Input/>
                 </Form.Item>
                 <h2>Lastname: </h2>
                 <Form.Item
@@ -38,7 +38,7 @@ function AccountPageEdit(){
                     },
                     ]}
                 >
-                    <Input style={{backgroundColor:"lightgray"}}/>
+                    <Input/>
                 </Form.Item>
                 <h2>Email: </h2>
                 <Form.Item
@@ -50,7 +50,7 @@ function AccountPageEdit(){
                     },
                     ]}
                 >
-                    <Input style={{backgroundColor:"lightgray"}}/>
+                    <Input/>
                 </Form.Item>
                 <h2>Password: </h2>
                 <Form.Item
@@ -67,7 +67,7 @@ function AccountPageEdit(){
                     }
                     ]}
                 >
-                    <Input.Password className="color" style={{backgroundColor:"lightgray"}}/>
+                    <Input.Password className="color"/>
                 </Form.Item>
                 <h2>Confirm password: </h2>
                 <Form.Item
@@ -95,7 +95,7 @@ function AccountPageEdit(){
                     }),
                     ]}
                 >
-                    <Input.Password className="color" style={{backgroundColor:"lightgray"}}/>
+                    <Input.Password className="color"/>
                 </Form.Item>
             </div>
             </Form>

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import Login from "../components/Login";
 import { logoutUser } from "../store/actions";
+import MyRecipes from "../components/MyRecipes";
 
 function AccountPage(){
     const [state, dispatch] = useContext(Context);
@@ -25,12 +26,16 @@ function AccountPage(){
                 <rect width="100" height="100" style={{fill:"rgb(255,100,100)", strokeWidth:"3"}} />
                 </svg>
                 <br/>
-                <Button type="primary" htmlType="button">Edit account</Button><span><Button type="default" htmlType="logout" onClick={() => logout()} style={{marginLeft: "10px", marginBottom: "10px"}}>Logout</Button></span>
-                <h1>Recipes</h1>
-                
-                <p className="footer" style={{ margin: "10px 3% 10px 3%" }}/>
+                <Link to="/account/edit">
+                <Button type="primary" htmlType="button">Edit account</Button>
+                </Link>
+                <span>
+                    <Button type="default" htmlType="logout" onClick={() => logout()} style={{marginLeft: "10px", marginBottom: "10px"}}>Logout</Button>
+                    </span>
+                <h1 style={{fontWeight:"700"}}>My Recipes</h1>
                 <Link to="/create" style={{ marginBottom: "10px" }}>Create a new recipe</Link>
-                <p> -- siia retseptid -- </p>
+                <p className="footer" style={{ margin: "10px 3% 10px 3%" }}/>
+                <MyRecipes></MyRecipes>
             </div>
         )
     }

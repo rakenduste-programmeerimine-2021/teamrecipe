@@ -8,6 +8,7 @@ import AccountPageEdit from "./pages/AccountPageEdit";
 import RecipeDetailedPage from "./pages/RecipeDetailedPage";
 import CookbookPage from "./pages/CookbookPage";
 import RecipeCreate from "./pages/RecipeCreate";
+import OtherUserPage from "./pages/OtherUserPage";
 import "./App.less"
 
 function App() {
@@ -17,14 +18,16 @@ function App() {
       <div className="content">
         <div className="content-border">
           <Switch>
+            <Route exact path="/" component={RecipePage}/>
             <Route exact path="/recipes" component={RecipePage}/>
             <Route exact path="/create" component={RecipeCreate}/>
-            <Route exact path="/recipes/:recipeid" component={RecipeDetailedPage}/>
             <Route exact path="/cookbook" component={CookbookPage}/>
             <Route exact path="/search" component={SearchPage}/>
             <Route exact path="/account" component={AccountPage}/>
             <Route exact path="/account/registration" component={Registration} />
             <Route exact path="/account/edit" component={AccountPageEdit} />
+            <Route exact path="/:userName" component={OtherUserPage} />
+            <Route exact path="/recipes/:recipeID" component={RecipeDetailedPage}/>
           </Switch>
           <h1 className="footer"></h1>
         </div>

@@ -1,8 +1,42 @@
 import Image from "../images/recipe1.jpg"
-import Image2 from "../images/recipe2.jpg"
+import { Context } from "../store";
+import { addRecipe, removeRecipe, updateRecipes } from "../store/actions";
+import { useState, useEffect, useContext } from "react";
+import { message } from 'antd';
+import { Link } from "react-router-dom";
 
 function Recipes(){
-    function allRecipes(){
+
+    const [state, dispatch] = useContext(Context);
+    const [recipes, setRecipes] = useState([]);
+
+    useEffect(() => {
+        getRecipes();
+
+        async function getRecipes(){
+        fetch("http://localhost:8081/api/recipe/")
+        .then(response => {
+            if(response.ok){
+                return response.json();
+            } else {
+                throw new Error("error fetching recipes!");
+            }
+        })
+        .then(data => {
+            console.log(data);
+            dispatch(updateRecipes(data));
+            setRecipes(data);
+        })
+        .catch(error => {
+            displayError(error)
+        });
+    }
+    }, [])
+
+    const displayError = (error) => {
+    message.error(error.toString());
+  }
+    
         return(
         <>
             <h1 style={{fontWeight:"700"}}>Recipes</h1>
@@ -14,19 +48,23 @@ function Recipes(){
                         <p>Crunchy chicken tenders are one of the most kid friendly foods around. Kids adore them and I suspect many adults do as well. Most family restaurants offer these golden nuggets on their kiddies menu and my boys have had their fair share when they were little.</p>
                     </span>
             </div>
-            <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", padding: "10px", borderRadius: "5px", display: "inline-block", textAlign: "left"}}>
-            <img src={Image2} alt="Italian Meatballs" width="150" height="150" style={{ float: "left", marginRight: "10px", cursor: "pointer"}}/>
-                <span>
-                    <b style={{cursor: "pointer"}}>Italian Meatballs Recipe</b>
-                    <p>Author: defaultSg</p>
-                    <p>Years ago I had an Italian neighbor who became a close friend. I always commented on her delicious meatballs and one day she shared the recipe with me. I have made them ever since about the same way. You can vary the meats using what's on hand</p>
-                </span>
+            <div>
+                <div>
+                    {recipes.map((recipe, index) =>(
+                        <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", padding: "10px", borderRadius: "5px", display: "", marginBottom: "10px", textAlign: "left"}} key={index}>
+                            <Link to={`/recipes/${recipe.recipeID}`}>
+                            <b style={{color:"black"}}>{recipe.recipeName}</b>
+                            </Link>
+                            <Link to={`/user/`}>
+                            <p style={{color:"black"}}>author: {recipe.userName}</p>
+                            </Link>
+                            <p>{recipe.recipeDescription}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </>
         )
-    }
-
-    return allRecipes()
     
 }
 

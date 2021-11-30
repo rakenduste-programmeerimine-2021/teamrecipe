@@ -23,3 +23,32 @@ exports.deleteRecipe = async (req, res) => {
 
   res.status(200).send("deleted")
 }
+
+exports.updateRecipe = async (req, res) => {
+  const { id } = req.params;
+  var update = {};
+  update.recipe = req.body.recipe
+  try{
+    const recipe = await Recipe.findOneAndUpdate({ _id: id }, { recipe: update.recipe })
+
+    if(!recipe) throw Error("Error updating recipe")
+
+    res.status(200).send("updated")
+    
+  } catch (e){
+    res.status(400).json({ error: e.message })
+  }
+}
+
+exports.getRecipe = async (req, res) => {
+  const { recipeID } = req.params;
+    try{
+        const recipe = await Recipe.findOne({recipeID: recipeID})
+
+        if (!recipe) throw Error("Error finding recipe")
+
+        res.status(200).json(recipe)
+    } catch (e){
+        res.status(400).json({ error: e.message })
+    }
+}

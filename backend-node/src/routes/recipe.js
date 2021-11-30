@@ -4,5 +4,8 @@ const recipeController = require("../controllers/recipe")
 router.get("/", recipeController.getRecipes)
 router.post("/create", recipeController.createRecipe)
 router.delete("/delete/:id", recipeController.deleteRecipe)
+router.delete("/delete/:id", recipeController.deleteRecipe)
+router.put("/update/:id", recipeController.updateRecipe)
+router.get("/:recipeID", recipeController.getRecipe)
 
 module.exports = router

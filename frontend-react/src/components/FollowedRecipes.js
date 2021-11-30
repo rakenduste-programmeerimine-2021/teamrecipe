@@ -1,4 +1,3 @@
-import Image from "../images/recipe1.jpg"
 import Image2 from "../images/recipe2.jpg"
 
 function FollowedRecipes(){
