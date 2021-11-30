@@ -41,9 +41,9 @@ exports.updateRecipe = async (req, res) => {
 }
 
 exports.getRecipe = async (req, res) => {
-  const { id } = req.params;
+  const { recipeID } = req.params;
     try{
-        const recipe = await Recipe.findOne({_id: id})
+        const recipe = await Recipe.findOne({recipeID: recipeID})
 
         if (!recipe) throw Error("Error finding recipe")
 

@@ -1,11 +1,8 @@
 import Image from "../images/recipe1.jpg"
-import Image2 from "../images/recipe2.jpg"
 import { Context } from "../store";
 import { addRecipe, removeRecipe, updateRecipes } from "../store/actions";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState, useEffect, useContext } from "react";
 import { message } from 'antd';
-import RecipePage from "../pages/RecipePage"
 import { Link } from "react-router-dom";
 
 function Recipes(){
@@ -69,8 +66,7 @@ function Recipes(){
             <div>
                 <div>
                     {recipes.map((recipe, index) =>(
-                        <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", padding: "10px", borderRadius: "5px", display: "inline-block", marginBottom: "10px", textAlign: "left"}} key={index}>
-                            <span>
+                        <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", padding: "10px", borderRadius: "5px", display: "", marginBottom: "10px", textAlign: "left"}} key={index}>
                             <Link to={`/recipes/${recipe.recipeID}`}>
                             <b style={{color:"black"}}>{recipe.recipeName}</b>
                             </Link>
@@ -78,7 +74,6 @@ function Recipes(){
                             <p style={{color:"black"}}>author: {recipe.userName}</p>
                             </Link>
                             <p>{recipe.recipeDescription}</p>
-                            </span>
                         </div>
                     ))}
                 </div>
