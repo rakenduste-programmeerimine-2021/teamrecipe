@@ -36,21 +36,6 @@ function Recipes(){
     const displayError = (error) => {
     message.error(error.toString());
   }
-
-
-
-    // const [recipes, setRecipes] = useState(null);
-
-    // useEffect(() => {
-    //     getRecipes();
-
-    // async function getRecipes() {
-    //     const response = await fetch("http://localhost:8081/api/recipe/")
-    //     const data = await response.json();
-    //         setRecipes(data);
-    //         console.log(data);
-    // }
-    // }, []);
     
         return(
         <>
