@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Context } from "../store";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ function AccountPage(){
     } else {
         return ( //kui on sisse logitud
             <div style={{padding:"10px 30px", width:"400px"}}>
-                <h1 style={{fontWeight:"700"}}>Account</h1>
+                <h1 style={{fontWeight:"700"}}>{state.auth.username}</h1>
                 <svg width="100" height="100" style={{marginBottom: "10px"}}>
                 <rect width="100" height="100" style={{fill:"rgb(255,100,100)", strokeWidth:"3"}} />
                 </svg>

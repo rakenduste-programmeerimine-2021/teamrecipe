@@ -1,10 +1,7 @@
-import Image2 from "../images/recipe2.jpg"
-
 function FollowedRecipes(){
     return(
     <>
         <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", padding: "10px", borderRadius: "5px", display: "inline-block", textAlign: "left"}}>
-        <img src={Image2} alt="Italian Meatballs" width="150" height="150" style={{ float: "left", marginRight: "10px", cursor: "pointer"}}/>
             <span>
                 <b style={{cursor: "pointer"}}>Italian Meatballs Recipe</b>
                 <p>Author: defaultSg</p>

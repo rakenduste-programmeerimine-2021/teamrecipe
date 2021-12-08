@@ -10,7 +10,7 @@ const recipeReducer = (state, action) => {
     case RECIPE_REMOVE:
       return {
         ...state,
-        data: state.data.filter(recipe => recipe.id !== action.payload)
+        data: state.data.filter(recipe => recipe.recipeID !== action.payload)
       }
     case RECIPES_UPDATE:
       const newData = [];

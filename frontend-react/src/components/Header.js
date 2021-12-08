@@ -22,7 +22,7 @@ function Header(){
             <Menu mode="horizontal" defaultSelectedKeys={['2']} style={{ marginBottom: "14px", background: "#FBDB14" }}>
                 <Menu.Item><Link to="/recipes">Recipes</Link></Menu.Item>
                 <Menu.Item><Link to="/cookbook">Cookbook</Link></Menu.Item>
-                <Menu.Item><Link to="/account">Account</Link></Menu.Item>
+                <Menu.Item><Link to="/account">My Account</Link></Menu.Item>
             </Menu>
         </>
     )
