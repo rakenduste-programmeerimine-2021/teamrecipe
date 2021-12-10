@@ -9,7 +9,7 @@ const recipeSchema = new Schema({
     recipeSteps: [{}],
     recipeIngredients: [{}],
     recipeIngredientAmount: [{}],
-    recipePicture: { type: String },
+    imageURL: { type: String },
     recipeLikeCount: { type: Number},
     createdAt: { type: Date, default: Date.now }
 });

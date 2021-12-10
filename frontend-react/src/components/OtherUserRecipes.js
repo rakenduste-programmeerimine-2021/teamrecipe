@@ -1,14 +1,14 @@
 import { useEffect, useState, useContext } from "react"
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Context } from "../store"
-import { message } from 'antd';
 import { updateRecipes } from "../store/actions"
 import { Link } from "react-router-dom";
-import { Col, Row } from "antd";
+import { Col, Row, Tooltip, message } from "antd";
 
-function MyRecipes(){
-
+function OtherUserRecipes(){
     const [state, dispatch] = useContext(Context);
     const [recipes, setRecipes] = useState([]);
+    const {userName} = useParams();
 
     useEffect(() => {
         fetch("http://localhost:8081/api/recipe/")
@@ -32,7 +32,7 @@ function MyRecipes(){
         <>
             <Col>
                 <Row>
-                {recipes.map((recipe, index) => (state.auth.username === recipe.userName && ( 
+                {recipes.map((recipe, index) => (userName === recipe.userName && ( 
                     <div style={{backgroundColor: "rgb(240, 240, 240)", margin: "10px", borderRadius: "5px"}} key={index}>
                             <Link to={`/recipes/${recipe.recipeID}`}>
                             <div style={{position: "relative"}}>
@@ -48,4 +48,4 @@ function MyRecipes(){
     )
 }
 
-export default MyRecipes
+export default OtherUserRecipes

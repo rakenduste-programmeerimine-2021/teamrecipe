@@ -1,15 +1,16 @@
-import Image from "../images/recipe1.jpg"
-import { Table, message } from "antd"
+import { Table, message, Button, Tooltip } from "antd"
+import { Link } from "react-router-dom";
 import { useParams } from "react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Context } from "../store";
+import { EditOutlined } from '@ant-design/icons';
 
 function RecipePage(){
     const {recipeID} = useParams();
+    const [state, dispatch] = useContext(Context)
     const [data, setData] = useState([]);
     let rows;
     let steps = [];
-    console.log(recipeID)
 
     useEffect(() => {
         fetch("http://localhost:8081/api/recipe/" + recipeID
@@ -22,12 +23,35 @@ function RecipePage(){
         }).then((data) => {
             setData(data)
         }).catch(error => {
-            displayError(error)
+            message.error(error.toString());
         });
     }, [rows])
 
-    const displayError = (error) => {
-        message.error(error.toString());
+    const checkAccount = () => {
+        if(data.userName == state.auth.username){
+            return (
+            <>
+                <img src={data.imageURL} width="300" height="300" style={{marginBottom: "10px"}}/>
+                <h1 style={{fontWeight:"700"}}>{data.recipeName} <Tooltip title="Edit recipe" placement="right"><Link to={data.recipeID + `/edit`}><Button style={{border:"none"}} icon={<EditOutlined />} shape="circle"></Button></Link></Tooltip></h1>
+                <p><b>Author: {data.userName}</b></p>
+                <p>{data.recipeDescription}</p>
+                <Table dataSource={rows} columns={columns} size="small" pagination="false"/>
+                {steps}
+                
+            </>
+            )
+        } else {
+            return (
+            <>
+                <img src={data.imageURL} width="300" height="300" style={{marginBottom: "10px"}}/>
+                <h1 style={{fontWeight:"700"}}>{data.recipeName}</h1>
+                <p><b>Author: {data.userName}</b></p>
+                <p>{data.recipeDescription}</p>
+                <Table dataSource={rows} columns={columns} size="small" pagination="false"/>
+                {steps}
+            </>
+            )
+        }
     }
 
     const columns = [
@@ -45,7 +69,7 @@ function RecipePage(){
 
     if(data._id !== undefined && rows == undefined){
         const iteratedData = data.recipeIngredients.map((row, i) => ({
-            key: row,
+            key: i,
             ingredient: row,
             amount: data.recipeIngredientAmount[i],
         }))
@@ -57,14 +81,7 @@ function RecipePage(){
     }
 
     return(
-        <>
-            <img src={Image} alt="Chicken" width="300" height="300" style={{marginBottom: "10px"}}/>
-            <h1 style={{fontWeight:"700"}}>{data.recipeName}</h1>
-            <p><b>Author: {data.userName}</b></p>
-            <p></p>
-            <Table dataSource={rows} columns={columns} size="small" pagination="false"/>
-            {steps}
-        </>
+        checkAccount()
     );
 }
 

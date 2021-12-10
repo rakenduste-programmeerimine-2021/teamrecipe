@@ -22,6 +22,11 @@ router.get(
     authController.getUser
 );
 
+router.put(
+    "/:userName",
+    authController.updateUser    
+);
+
 router.post(
     "/signup",
     [

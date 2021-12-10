@@ -1,33 +1,68 @@
 import { useContext, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Context } from "../store";
-import { Button, Form, Input, Upload, message, Card } from "antd";
+import { Button, Form, Input, Upload, message, Card, Modal } from "antd";
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import { addRecipe } from "../store/actions";
+import { updateRecipes, removeRecipe } from "../store/actions";
 import "./pageStyles.css"
 
-function RecipeCreate(){
+function RecipeEdit(){
+    const {recipeID} = useParams();
     const history = useHistory();
     const [state, dispatch] = useContext(Context);
+    const [data, setData] = useState([]);
+    const [form] = Form.useForm();
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const { confirm } = Modal;
+    const mappedIngredients = [];
     const initialState = {
         fileList: []
     }
     const [fileList, setFileList] = useState({...initialState});
     const newRecipeData = new FormData()
+    
 
-    /*useEffect(() => {
+    useEffect(() => {
+        fetch("http://localhost:8081/api/recipe/" + recipeID
+        ).then((response) => {
+            if(response.ok){
+                return response.json()
+            } else {
+                throw new Error("Error fetching the recipe!");
+            }
+        }).then((data) => {
+            setData(data)
+            dataMapping(data);
+            form.setFieldsValue({
+                recipeName: data.recipeName,
+                recipeDescription: data.recipeDescription,
+                recipeIngredientField: mappedIngredients,
+                recipeSteps: data.recipeSteps
+            });
+        }).catch(error => {
+            message.error(error.toString());
+        });
+    }, [])
 
-    }, [])*/
+    const dataMapping = (data) => {
+        for(var i=0; i<data.recipeIngredients.length; i++){
+            mappedIngredients.push({
+                ingredient: data.recipeIngredients[i],
+                amount: data.recipeIngredientAmount[i]
+            })
+        }
+    }
 
     const onFinish = (values) => {
         createFormData(values);
-        return fetch("http://localhost:8081/api/recipe/create",{
+        return fetch("http://localhost:8081/api/recipe/update/" + recipeID,{
             method: "POST",
-            body: newRecipeData
+            body: newRecipeData,
         }).then((response) => {
             if(response.ok){
-                message.success("Recipe successfully created!")
-                dispatch(addRecipe(newRecipeData))
+                message.success("Recipe successfully updated!")
+                dispatch(updateRecipes(newRecipeData))
                 return history.replace("/account")
             } else {
                 throw new Error("Error posting the recipe!")
@@ -38,17 +73,59 @@ function RecipeCreate(){
     }
 
     const createFormData = (values) => {
-        newRecipeData.append("userName", state.auth.username)
-        newRecipeData.append("recipeName", values.recipeName)
-        newRecipeData.append("recipeDescription", values.recipeDescription)
-        for(var i=0; i<values.recipeIngredients.length; i++){
-            newRecipeData.append("recipeIngredients", values.recipeIngredients[i].ingredient)
-            newRecipeData.append("recipeIngredientAmount", values.recipeIngredients[i].amount)
+        if(fileList.fileList.length > 0){ //file
+            const prevImage = data.imageURL.split("images/");
+            newRecipeData.append("userName", state.auth.username)
+            newRecipeData.append("recipeName", values.recipeName)
+            newRecipeData.append("recipeDescription", values.recipeDescription)
+            for(var i=0; i<values.recipeIngredientField.length; i++){
+                newRecipeData.append("recipeIngredients", values.recipeIngredientField[i].ingredient)
+                newRecipeData.append("recipeIngredientAmount", values.recipeIngredientField[i].amount)
+            }
+            for(var i=0; i<values.recipeSteps.length; i++){
+                newRecipeData.append("recipeSteps", values.recipeSteps[i])
+            }
+            newRecipeData.append("image", fileList.fileList[0].originFileObj)
+            newRecipeData.append("prevImage", prevImage[1])
+            console.log(prevImage[1])
+            newRecipeData.append("_method", "PUT")
+        } else { //no file
+            newRecipeData.append("userName", state.auth.username)
+            newRecipeData.append("recipeName", values.recipeName)
+            newRecipeData.append("recipeDescription", values.recipeDescription)
+            for(var i=0; i<values.recipeIngredientField.length; i++){
+                newRecipeData.append("recipeIngredients", values.recipeIngredientField[i].ingredient)
+                newRecipeData.append("recipeIngredientAmount", values.recipeIngredientField[i].amount)
+            }
+            for(var i=0; i<values.recipeSteps.length; i++){
+                newRecipeData.append("recipeSteps", values.recipeSteps[i])
+            }
+            newRecipeData.append("_method", "PUT")
         }
-        for(var i=0; i<values.recipeSteps.length; i++){
-            newRecipeData.append("recipeSteps", values.recipeSteps[i])
+    }
+
+    const deleteRecipe = () => {
+        const prevImage = data.imageURL.split("images/");
+        var bodyData = {
+            recipeID: recipeID,
+            filename: prevImage[1]
         }
-        newRecipeData.append("image", fileList.fileList[0].originFileObj)
+        console.log(bodyData)
+        return fetch("http://localhost:8081/api/recipe/delete/",{
+            method: "DELETE",
+            body: JSON.stringify(bodyData),
+            headers: {"Content-Type":"application/json"}
+        }).then((response) => {
+            if(response.ok){
+                message.success("Recipe successfully deleted!")
+                dispatch(removeRecipe(recipeID))
+                return history.replace("/account")
+            } else {
+                throw new Error("Error deleting the recipe!")
+            }
+        }).catch(error => {
+            message.error(error);
+        });
     }
 
     const handleChange = info => {
@@ -62,10 +139,20 @@ function RecipeCreate(){
         return false;
     }
 
-    const props = {
-        /*showUploadList: {
-            showPreviewIcon: false
-        }*/
+    const deleteWarning = () => {
+        confirm({
+            visible: {isModalVisible},
+            content: (<b>Are you sure you want to delete the recipe?</b>),
+            onOk(){
+                deleteRecipe()
+                setIsModalVisible(false);
+            },
+            onCancel(){
+                setIsModalVisible(false);
+            },
+            okText: "Delete",
+        });
+        
     }
 
     if(state.auth.token == undefined || state.auth.token == null){
@@ -76,29 +163,30 @@ function RecipeCreate(){
         return(
             <>
                 <h1>Add a recipe</h1>
-                <br/>
                 <Form
+                    form={form}
                     name="createRecipe"
                     scrollToFirstError
                     onFinish={onFinish}
                 >
+                <div>
+                    <img src={data.imageURL} width="100" height="100" style={{marginBottom: "10px", float:"left", marginLeft: "70px"}}/>
                     <Form.Item>
                         <Upload
-                            {...props}
+                            name="image"
                             accept=".jpg,.png,.jpeg"
                             onChange={handleChange}
                             onRemove={handleRemoval}
                             beforeUpload={() => false}
                             fileList={fileList.fileList}
                             listType="picture-card"
-                            style={{minWidth:"1000px"}}
                             >
-                            
-                            {fileList.fileList.length < 1 && <div ><PlusOutlined/><div >Upload</div></div>}
+                            {fileList.fileList.length < 1 && <div ><PlusOutlined/><div >Replace</div></div>}
                         </Upload>
                     </Form.Item>
+                </div>
                     <h1 style={{marginTop: "10px"}}>Recipe name</h1>
-                    <Form.Item 
+                    <Form.Item
                         name="recipeName"
                         rules={[
                             {
@@ -129,7 +217,7 @@ function RecipeCreate(){
                     </Form.Item>
                     <h1>Ingredients</h1>
                     <Form.List
-                        name="recipeIngredients"
+                        name="recipeIngredientField"
                         rules={[
                         {
                             validator: async (_, names) => {
@@ -207,8 +295,8 @@ function RecipeCreate(){
                         rules={[
                         {
                             validator: async (_, names) => {
-                            if (!names || names.length < 2) {
-                                return Promise.reject(new Error('At least 2 steps!'));
+                            if (!names || names.length < 1) {
+                                return Promise.reject(new Error('At least 1 step!'));
                             }
                             },
                         },
@@ -263,10 +351,11 @@ function RecipeCreate(){
                         </Button>
                     </Form.Item>
                 </Form>
+                <p onClick = {deleteWarning} style={{cursor:"pointer", color:"#FBDB14"}}>Delete recipe</p>
             </>
         );
     }
     
 }
 
-export default RecipeCreate;
+export default RecipeEdit;

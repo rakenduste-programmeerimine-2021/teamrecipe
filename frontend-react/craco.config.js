@@ -13,7 +13,7 @@ module.exports = {
               '@btn-font-weight': '700',
               '@btn-primary-color': '#000000',
               '@text-selection-bg': '#000000',
-              '@menu-highlight-color': '#000000'
+              '@menu-highlight-color': '#000000',
             },
             javascriptEnabled: true,
           },
