@@ -80,3 +80,15 @@ exports.getUser = async (req, res) => {
         res.status(400).json({ error: e.message })
     }
 }
+
+exports.updateUser = async (req, res) => {
+    const {userName} = req.params;
+    const data = await User.findOne({userName: userName})
+
+    if (!data) res.status(404).send("no user with that name")
+
+    const updated = await User.findOneAndUpdate({userName: userName}, req.body,{new: true})
+
+    res.status(200).send(`user ${data} updated to ${updated}`)
+
+}

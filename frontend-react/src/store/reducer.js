@@ -1,4 +1,4 @@
-import { RECIPE_ADD, RECIPE_REMOVE, RECIPES_UPDATE, USER_LOGIN, USER_LOGOUT } from "./actions";
+import { RECIPE_ADD, RECIPE_REMOVE, RECIPES_UPDATE, USER_LOGIN, USER_LOGOUT, USER_UPDATE } from "./actions";
 
 const recipeReducer = (state, action) => {
   switch(action.type){
@@ -37,6 +37,12 @@ const authReducer = (state, action) => {
         username: null,
         token: null
       }
+    case USER_UPDATE:
+      const newData = [];
+        return {
+          ...state,
+          data: newData.concat(action.payload)
+        }
     default:
       return state
   }
