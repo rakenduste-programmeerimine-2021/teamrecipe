@@ -10,7 +10,7 @@ const recipeSchema = new Schema({
     recipeIngredients: [{}],
     recipeIngredientAmount: [{}],
     imageURL: { type: String },
-    recipeLikeCount: { type: Number},
+    recipeLikeCount: { type: Number },
     createdAt: { type: Date, default: Date.now }
 });
 

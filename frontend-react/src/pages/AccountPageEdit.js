@@ -7,7 +7,6 @@ import { message } from 'antd';
 import Login from "../components/Login";
 import axios from "axios";
 import { logoutUser } from "../store/actions";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function AccountPageEdit(){
 
@@ -23,8 +22,9 @@ function AccountPageEdit(){
     
         useEffect(() => {
         getAccount();
+    }, [])
 
-        async function getAccount(){
+    async function getAccount(){
         fetch("http://localhost:8081/api/auth/" + state.auth.username)
         .then(response => {
             if(response.ok){
@@ -49,24 +49,23 @@ function AccountPageEdit(){
             displayError(error)
         });
     }
-    }, [])
 
-        const displayError = (error) => {
-    message.error(error.toString());
-  }
+    const displayError = (error) => {
+        message.error(error.toString());
+    }
 
-  const handleSubmit = async () => {
-      console.log("Data for update : ", username, email, firstname, lastname);
-      await axios.put(`http://localhost:8081/api/auth/${user.userName}`,{
-          userName: username,
-          email,
-          firstName: firstname,
-          lastName: lastname
-      }).then((response) => {
-          console.log(JSON.stringify(response.data));
-          dispatch(logoutUser());
-      })
-  };
+    const handleSubmit = async () => {
+        console.log("Data for update : ", username, email, firstname, lastname);
+        await axios.put(`http://localhost:8081/api/auth/${user.userName}`,{
+            userName: username,
+            email,
+            firstName: firstname,
+            lastName: lastname
+        }).then((response) => {
+            console.log(JSON.stringify(response.data));
+            dispatch(logoutUser());
+        })
+    };
 
     if(state.auth.token == undefined){
         return (

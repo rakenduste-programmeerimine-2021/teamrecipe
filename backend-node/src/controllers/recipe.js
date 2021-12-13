@@ -1,4 +1,5 @@
 const Recipe = require('../models/Recipe')
+const User = require('../models/User')
 var mongoose = require('mongoose');
 
 exports.getRecipes = async (req, res) => {
@@ -36,7 +37,6 @@ exports.createRecipe = async (req, res) => {
 }
 
 exports.deleteRecipe = async (req, res) => {
-  console.log(req.body)
   const id = req.body.recipeID;
   const parameter = req.body.filename
   var gridfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
@@ -86,7 +86,7 @@ exports.updateRecipe = async (req, res) => {
       "recipeIngredients": req.body.recipeIngredients,
       "recipeIngredientAmount": req.body.recipeIngredientAmount,
     }
-  }
+}
 
   if(req.file == undefined){
     const recipe = await Recipe.findOneAndUpdate({ recipeID: id }, update)
@@ -109,5 +109,101 @@ exports.updateRecipe = async (req, res) => {
         files.map((img) => {
             return (gridfs.delete(img._id), res.status(200).send("updated and changed the image"))
     }));
+  }
+}
+
+exports.getFollowedRecipes = async (req, res) => {
+  const { username } = req.params
+  var recipeArray = []
+
+  try{
+    const userName = await User.findOne({userName: username})
+
+    if(!userName) throw Error("Invalid username")
+
+    const findRecipes = await Recipe.find({userName: userName.followedUsers})
+
+    if(!findRecipes) throw Error("Error finding followed user's recipes")
+
+    res.status(200).send(findRecipes)
+  } catch (e) {
+    res.status(400).json({ Error: e.message })
+  }
+}
+
+exports.likeRecipe = async (req, res) => {
+  const { userName, recipeID } = req.body;
+    try{
+      const username = await User.findOne({userName: userName})
+
+      if(!username) throw Error("Invalid username")
+
+      const recipe = await Recipe.findOne({recipeID: recipeID})
+
+      if (!recipe) throw Error("Error finding recipe")
+
+      const checkLikesArray = await User.find({userName: userName, likedRecipeIDs: { $in: [recipeID] } })
+
+      if(checkLikesArray.length != 0) throw Error("User has already liked this recipe")
+
+      const addLikeDataToUser = await User.findOneAndUpdate({userName: userName}, { $push: { likedRecipeIDs: recipeID }})
+
+      if(!addLikeDataToUser) throw Error("Error adding like data to user")
+
+      const addLikeDataToRecipe = await Recipe.findOneAndUpdate({recipeID: recipeID}, { $inc: { recipeLikeCount: 1}})
+
+      if(!addLikeDataToRecipe) throw Error("Error adding like data to recipe")
+
+      res.status(200).json({ message: "Recipe successfully liked" })
+    } catch (e){
+        res.status(400).json({ error: e.message })
+    }
+}
+
+exports.unLikeRecipe = async (req, res) => {
+  const { userName, recipeID } = req.body;
+    try{
+      const username = await User.findOne({userName: userName})
+
+      if(!username) throw Error("Invalid username")
+
+      const recipe = await Recipe.findOne({recipeID: recipeID})
+
+      if (!recipe) throw Error("Error finding recipe")
+
+      const checkLikesArray = await User.find({userName: userName, likedRecipeIDs: { $in: [recipeID] } })
+
+      if(checkLikesArray.length == 0) throw Error("User has not liked this recipe")
+
+      const addLikeDataToUser = await User.findOneAndUpdate({userName: userName}, { $pull: { likedRecipeIDs: recipeID }})
+
+      if(!addLikeDataToUser) throw Error("Error removing like data from user")
+
+      const addLikeDataToRecipe = await Recipe.findOneAndUpdate({recipeID: recipeID}, { $inc: { recipeLikeCount: -1}})
+
+      if(!addLikeDataToRecipe) throw Error("Error removing like data from recipe")
+
+      res.status(200).json({ message: "Recipe successfully unliked" })
+    } catch (e){
+      res.status(400).json({ error: e.message })
+    }
+}
+
+exports.getLikedRecipes = async (req, res) => {
+  const { username } = req.params
+  var likesArray = []
+
+  try{
+    const userName = await User.findOne({userName: username})
+
+    if(!userName) throw Error("Invalid username")
+
+    const findRecipes = await Recipe.find({recipeID: userName.likedRecipeIDs})
+
+    if(!findRecipes) throw Error("Error finding followed user's recipes")
+
+    res.status(200).send(findRecipes)
+  } catch (e) {
+    res.status(400).json({ Error: e.message })
   }
 }

@@ -1,6 +1,7 @@
 import { Menu, Input } from "antd";
 import { Link } from "react-router-dom";
 import "../index.less";
+import { SearchOutlined } from '@ant-design/icons';
 
 function Header(){
 
@@ -16,7 +17,7 @@ function Header(){
                 <Menu.Item><Link to="/recipes">Recipes</Link></Menu.Item>
                 <Menu.Item><Link to="/cookbook">Cookbook</Link></Menu.Item>
                 <Menu.Item><Link to="/account">Account</Link></Menu.Item>
-                <Menu.Item><Link to ="/search">Search</Link></Menu.Item>
+                <Menu.Item style={{marginLeft: "auto"}}><Link to ="/search"><SearchOutlined /></Link></Menu.Item>
             </Menu>
         </>
     )

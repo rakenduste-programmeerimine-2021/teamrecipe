@@ -17,15 +17,12 @@ router.post(
     authController.login
 );
 
-router.get(
-    "/:userName",
-    authController.getUser
-);
+router.get("/:userName", authController.getUser);
 
-router.put(
-    "/:userName",
-    authController.updateUser    
-);
+router.put("/follow", authController.followUser);
+router.put("/unfollow", authController.unFollowUser);
+router.put("/:userName", authController.updateUser);
+
 
 router.post(
     "/signup",

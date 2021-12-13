@@ -18,7 +18,7 @@ exports.login = async (req, res) => {
         }
 
         const token = jwt.sign(userTemplate, process.env.JWT_SECRET)
-        if (!token) throw Error("Something critical happened 99981811")
+        if (!token) throw Error("Something critical happened")
 
         res.status(200).json({
         token,
@@ -85,10 +85,58 @@ exports.updateUser = async (req, res) => {
     const {userName} = req.params;
     const data = await User.findOne({userName: userName})
 
-    if (!data) res.status(404).send("no user with that name")
+    if (!data) res.status(404).send("No user with that name")
 
     const updated = await User.findOneAndUpdate({userName: userName}, req.body,{new: true})
 
-    res.status(200).send(`user ${data} updated to ${updated}`)
+    res.status(200).send(`User ${data} updated to ${updated}`)
 
+}
+
+exports.followUser = async (req, res) => {
+    const {followedUser, followingUser} = req.body
+
+    try{
+        if(followedUser == followingUser) throw Error("Followed user can not be same as following user")
+
+        const followedData = await User.findOne({userName: followedUser})
+    
+        if (!followedData) throw Error("Error finding followable user")
+
+        const checkFollowerArray = await User.find({userName: followingUser, followedUsers: { $in: [followedUser] } })
+
+        if(checkFollowerArray.length != 0) throw Error("User has already followed this account")
+    
+        const followerData = await User.findOneAndUpdate({userName: followingUser}, { $push: { followedUsers: followedUser }})
+    
+        if(!followerData) throw Error("Error following the user")
+    
+        res.status(200).json({ message: "User followed successfully" })
+    } catch (e) {
+        res.status(400).json({ error: e.message })
+    }
+}
+
+exports.unFollowUser = async (req, res) => {
+    const {followedUser, followingUser} = req.body
+
+    try{
+        if(followedUser == followingUser) throw Error("Followed user can not be same as following user")
+
+        const followedData = await User.findOne({userName: followedUser})
+    
+        if (!followedData) throw Error("Error finding followable user")
+
+        const checkFollowerArray = await User.find({userName: followingUser, followedUsers: { $in: [followedUser] } })
+
+        if(checkFollowerArray.length == 0) throw Error("User has not followed this account")
+    
+        const followerData = await User.findOneAndUpdate({userName: followingUser}, { $pull: { followedUsers: followedUser }})
+    
+        if(!followerData) throw Error("Error unfollowing the user")
+    
+        res.status(200).json({ message: "User unfollowed successfully" })
+    } catch (e) {
+        res.status(400).json({ error: e.message })
+    }
 }

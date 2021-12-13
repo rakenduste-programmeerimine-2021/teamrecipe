@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import { message } from 'antd';
 import { Link } from "react-router-dom";
 
-function FollowedRecipes(){
+function LikedRecipes(){
     const [state, dispatch] = useContext(Context);
     const [recipes, setRecipes] = useState([]);
 
@@ -13,12 +13,12 @@ function FollowedRecipes(){
     }, [])
 
     function getRecipes(){
-        fetch("http://localhost:8081/api/recipe/followed/" + state.auth.username)
+        fetch("http://localhost:8081/api/recipe/like/" + state.auth.username)
         .then(response => {
             if(response.ok){
                 return response.json();
             } else {
-                throw new Error("Error fetching recipes!");
+                throw new Error("Error fetching liked recipes!");
             }
         })
         .then(data => {
@@ -29,7 +29,7 @@ function FollowedRecipes(){
         });
     }
 
-    const displayFollowedUserRecipes = (recipe, index) => {
+    const displayLikedUserRecipes = (recipe, index) => {
         return (
             <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", minHeight:"170px", minWidth:"400px", padding: "10px", borderRadius: "5px", display: "", marginBottom: "10px", textAlign: "left"}} key={index}>
                 <Link to={`/recipes/${recipe.recipeID}`}><img src={recipe.imageURL} width="150" height="150" style={{ float: "left", marginRight: "10px", cursor: "pointer"}}/></Link>
@@ -45,16 +45,16 @@ function FollowedRecipes(){
     }
     
     if(recipes.length == 0){
-        return (<h3>Follow users to start seeing their posts here</h3>)
+        return (<h3>Like recipes to start seeing them here</h3>)
     } else {
         return(
             <div>
                 {recipes.map((recipe, index) =>(
-                    displayFollowedUserRecipes(recipe, index)
+                    displayLikedUserRecipes(recipe, index)
                 ))}
             </div>
         )
     }
 }
 
-export default FollowedRecipes
+export default LikedRecipes
