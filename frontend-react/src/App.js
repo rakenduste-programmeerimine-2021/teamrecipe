@@ -12,6 +12,7 @@ import OtherUserPage from "./pages/OtherUserPage";
 import RecipeEdit from "./pages/RecipeEdit";
 import "./App.less"
 import "./index.less"
+import AccountPagePasswordEdit from "./pages/AccountPagePasswordEdit";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route exact path="/account" component={AccountPage}/>
             <Route exact path="/account/registration" component={Registration} />
             <Route exact path="/account/edit" component={AccountPageEdit} />
+            <Route exact path="/account/edit/password" component={AccountPagePasswordEdit} />
             <Route exact path="/user/:userName" component={OtherUserPage} />
             <Route exact path="/recipes/:recipeID/edit" component={RecipeEdit}/>
             <Route exact path="/recipes/:recipeID" component={RecipeDetailedPage}/>

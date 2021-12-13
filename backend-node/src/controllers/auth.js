@@ -31,7 +31,7 @@ exports.login = async (req, res) => {
 }
 
 exports.signup = async (req, res) => {
-    const { userName, email, password, firstName, lastName, privacyToggle, emailNotifications } = req.body
+    const { userName, email, password, firstName, lastName, emailNotifications } = req.body
 
     try {
         const emailCheck = await User.findOne({ email: email })
@@ -55,7 +55,6 @@ exports.signup = async (req, res) => {
         lastName,
         password: hash,
         passwordConfirmation: hash,
-        privacyToggle,
         emailNotifications
         })
 
@@ -83,12 +82,82 @@ exports.getUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     const {userName} = req.params;
-    const data = await User.findOne({userName: userName})
+    try{
+        req.body.password = await bcrypt.hash(req.body.password, 8);
+        var update = {
+        "userName": req.body.userName,
+        "email": req.body.email,
+        "password": req.body.password,
+        "firstName": req.body.firstName,
+        "lastName": req.body.lastName,
+        "emailNotifications": req.body.emailNotifications
+        };
+        const user = await User.findOneAndUpdate({userName: userName}, update)
+        if(!user) throw Error("error updating user")
 
-    if (!data) res.status(404).send("no user with that name")
+        res.status(200).send("updated user successfully")
 
-    const updated = await User.findOneAndUpdate({userName: userName}, req.body,{new: true})
-
-    res.status(200).send(`user ${data} updated to ${updated}`)
+    } catch (e) {
+        res.status(400).json({ error: e.message })
+    }
 
 }
+
+// exports.updateUser = async (req, res) => {
+//     const {userName} = req.params;
+//     try{
+//         const data = await User.findOne({userName: userName})
+
+//         if (!data) res.status(404).send("no user with that name")
+
+//         const updated = await User.findOneAndUpdate({userName: userName}, req.body,{new: true})
+
+//         res.status(200).send(`user ${data} updated to ${updated}`)
+
+//     } catch (e) {
+//         res.status(400).json({ error: e.message })
+//     }
+
+// }
+
+// exports.updateUser = async (req, res) => {
+//     const {userName} = req.params;
+//     const password = req.body.password;
+//     try{
+//         req.body.password = await bcrypt.hash(req.body.password, 8);
+//         var update = {};
+
+//         if(password == undefined){
+//         update = {
+//             "userName": req.body.userName,
+//             "email": req.body.email,
+//             "firstName": req.body.firstName,
+//             "lastName": req.body.lastName,
+//             "emailNotifications": req.body.emailNotifications
+//         }
+//         const user = await User.findOneAndUpdate({userName: userName}, update)
+//         if(!user) throw Error("error updating user")
+
+//         res.status(200).send("updated user successfully")
+//         } else {
+//         update = {
+//             "userName": req.body.userName,
+//             "email": req.body.email,
+//             "password": req.body.password,
+//             "firstName": req.body.firstName,
+//             "lastName": req.body.lastName,
+//             "emailNotifications": req.body.emailNotifications
+//             }
+//         const user = await User.findOneAndUpdate({userName: userName}, update)
+//         if(!user) throw Error("error updating user")
+
+//         res.status(200).send("updated user successfully")
+//         }
+        
+
+
+//     } catch (e) {
+//         res.status(400).json({ error: e.message })
+//     }
+
+// }

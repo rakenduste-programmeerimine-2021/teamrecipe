@@ -8,14 +8,12 @@ import Store from './store';
 const { Footer, Content } = Layout;
 
 ReactDOM.render(
-  <React.StrictMode>
         <Layout>
           <Content>
             <Store>
               <App />
             </Store>
           </Content>
-        </Layout>
-  </React.StrictMode>,
+        </Layout>,
   document.getElementById('root'),
 );

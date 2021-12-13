@@ -1,12 +1,15 @@
 import { Context } from "../store";
 import { updateRecipes } from "../store/actions";
 import { useState, useEffect, useContext } from "react";
-import { message } from 'antd';
+import { Select, message, Tag } from 'antd';
+import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 function Recipes(){
     const [state, dispatch] = useContext(Context);
     const [recipes, setRecipes] = useState([]);
+    const [tags, setTags] = useState("");
+    const [user, setUser] = useState("");
 
     useEffect(() => {
         getRecipes();
@@ -30,9 +33,17 @@ function Recipes(){
     }
     }, [])
 
+
     const checkAccount = (recipe, index) => {
-        if(recipe.userName == state.auth.username){
+        if(recipe.userName == state.auth.username && recipe.recipePrivacy == "Shared"){
             return (
+                <div key={index}>
+                        {/* <Select mode="tags" style={{width:"25%"}} placeholder="Select filters for recipes">
+                            {recipe.recipeType}
+                            {console.log(recipe.recipeType)}
+                        </Select>
+                        <br/>
+                        <br/> */}
                 <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", minHeight:"170px", minWidth:"400px", padding: "10px", borderRadius: "5px", display: "", marginBottom: "10px", textAlign: "left"}} key={index}>
                     <Link to={`/recipes/${recipe.recipeID}`}><img src={recipe.imageURL} width="150" height="150" style={{ float: "left", marginRight: "10px", cursor: "pointer"}}/></Link>
                     <Link to={`/recipes/${recipe.recipeID}`}>
@@ -41,12 +52,21 @@ function Recipes(){
                     <Link to={`/account`}>
                     <p style={{color:"black"}}><b>Author:</b> {recipe.userName}</p>
                     </Link>
-                    <p>{recipe.recipeDescription}</p>
+                    <p><b>Recipe Type: </b>{recipe.recipeType}</p>
+                    <p><b>Description: </b>{recipe.recipeDescription}</p>
+                </div>
                 </div>
             )
-        } else {
+        } else if (recipe.recipePrivacy == "Shared") {
             return (
-                <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", minHeight:"170px", minWidth:"400px", padding: "10px", borderRadius: "5px", display: "", marginBottom: "10px", textAlign: "left"}} key={index}>
+                <div key={index}>
+                        {/* <Select mode="tags" style={{width:"25%"}} placeholder="Select filters for recipes">
+                            {recipe.recipeType}
+                            {console.log(recipe.recipeType)}
+                        </Select>
+                        <br/>
+                        <br/> */}
+                <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", minHeight:"170px", minWidth:"400px", padding: "10px", borderRadius: "5px", display: "", marginBottom: "10px", textAlign: "left"}}>
                     <Link to={`/recipes/${recipe.recipeID}`}><img src={recipe.imageURL} width="150" height="150" style={{ float: "left", marginRight: "10px", cursor: "pointer"}}/></Link>
                     <Link to={`/recipes/${recipe.recipeID}`}>
                     <h2 style={{color:"black"}}>{recipe.recipeName}</h2>
@@ -54,7 +74,9 @@ function Recipes(){
                     <Link to={`/user/${recipe.userName}`}>
                     <p style={{color:"black"}}><b>Author:</b> {recipe.userName}</p>
                     </Link>
-                    <p>{recipe.recipeDescription}</p>
+                    <p><b>Recipe Type: </b>{recipe.recipeType}</p>
+                    <p><b>Description: </b>{recipe.recipeDescription}</p>
+                </div>
                 </div>
             )
         }
@@ -69,6 +91,13 @@ function Recipes(){
                         checkAccount(recipe, index)
                     ))}
                 </div>
+                    {/* {recipes.map((recipe, index) => (state.auth.username === recipe.userName && (
+                        <Select mode="tags" style={{width:"25%"}} placeholder="Select filters for recipes">
+                            {recipe.recipeType}
+                            {console.log(recipe.recipeType)}
+                        </Select>,
+                        checkAccount(recipe, index)
+                    )))} */}
             </div>
         </>
         )

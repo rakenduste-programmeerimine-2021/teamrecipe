@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { Context } from "../store";
-import { Button, Form, Input, Upload, message, Card, Modal } from "antd";
+import { Button, Form, Input, Upload, message, Card, Modal, Select } from "antd";
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { updateRecipes, removeRecipe } from "../store/actions";
 import "./pageStyles.css"
@@ -36,9 +36,11 @@ function RecipeEdit(){
             dataMapping(data);
             form.setFieldsValue({
                 recipeName: data.recipeName,
+                recipeType: data.recipeType,
                 recipeDescription: data.recipeDescription,
                 recipeIngredientField: mappedIngredients,
-                recipeSteps: data.recipeSteps
+                recipeSteps: data.recipeSteps,
+                recipePrivacy: data.recipePrivacy
             });
         }).catch(error => {
             message.error(error.toString());
@@ -77,6 +79,7 @@ function RecipeEdit(){
             const prevImage = data.imageURL.split("images/");
             newRecipeData.append("userName", state.auth.username)
             newRecipeData.append("recipeName", values.recipeName)
+            newRecipeData.append("recipeType", values.recipeType)
             newRecipeData.append("recipeDescription", values.recipeDescription)
             for(var i=0; i<values.recipeIngredientField.length; i++){
                 newRecipeData.append("recipeIngredients", values.recipeIngredientField[i].ingredient)
@@ -85,6 +88,7 @@ function RecipeEdit(){
             for(var i=0; i<values.recipeSteps.length; i++){
                 newRecipeData.append("recipeSteps", values.recipeSteps[i])
             }
+            newRecipeData.append("privacyToggle", values.privacyToggle)
             newRecipeData.append("image", fileList.fileList[0].originFileObj)
             newRecipeData.append("prevImage", prevImage[1])
             console.log(prevImage[1])
@@ -92,6 +96,7 @@ function RecipeEdit(){
         } else { //no file
             newRecipeData.append("userName", state.auth.username)
             newRecipeData.append("recipeName", values.recipeName)
+            newRecipeData.append("recipeType", values.recipeType)
             newRecipeData.append("recipeDescription", values.recipeDescription)
             for(var i=0; i<values.recipeIngredientField.length; i++){
                 newRecipeData.append("recipeIngredients", values.recipeIngredientField[i].ingredient)
@@ -100,6 +105,7 @@ function RecipeEdit(){
             for(var i=0; i<values.recipeSteps.length; i++){
                 newRecipeData.append("recipeSteps", values.recipeSteps[i])
             }
+            newRecipeData.append("privacyToggle", values.privacyToggle)
             newRecipeData.append("_method", "PUT")
         }
     }
@@ -185,6 +191,21 @@ function RecipeEdit(){
                         </Upload>
                     </Form.Item>
                 </div>
+                    <h1 style={{marginTop: "10px"}}>Would you like to share this recipe with others?<br/>(Show this recipe on the main page)</h1>
+                    <Form.Item 
+                        name="recipePrivacy"
+                        rules={[
+                            {
+                                required: true,
+                                whitespace: true,
+                            }
+                        ]}
+                    >
+                        <Select>
+                            <Select.Option value="Private">Private</Select.Option>
+                            <Select.Option value="Shared">Shared</Select.Option>
+                        </Select>
+                    </Form.Item>
                     <h1 style={{marginTop: "10px"}}>Recipe name</h1>
                     <Form.Item
                         name="recipeName"
@@ -202,6 +223,27 @@ function RecipeEdit(){
                     >
                         <Input/>
                     </Form.Item>
+
+                    <h1 style={{marginTop: "10px"}}>Type of Recipe</h1>
+                    <Form.Item 
+                        name="recipeType"
+                        rules={[
+                            {
+                                required: true,
+                                whitespace: true,
+                            }
+                        ]}
+                    >
+                        <Select>
+                            <Select.Option value="Chicken">Chicken</Select.Option>
+                            <Select.Option value="Beef">Beef</Select.Option>
+                            <Select.Option value="Vegan">Vegan</Select.Option>
+                            <Select.Option value="Fish">Fish</Select.Option>
+                            <Select.Option value="Vegetarian">Vegetarian</Select.Option>
+                            <Select.Option value="Other">Other</Select.Option>
+                        </Select>
+                    </Form.Item>
+
                     <h1 style={{marginTop: "10px"}}>Description</h1>
                     <Form.Item 
                         name="recipeDescription"

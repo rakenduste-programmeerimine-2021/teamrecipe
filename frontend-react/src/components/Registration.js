@@ -18,7 +18,6 @@ function Registration(){
             lastName: values.lastname,
             password: values.password,
             passwordConfirmation: values.confirm,
-            privacyToggle: values.privacytoggle,
             emailNotifications: values.emailnotifications
         };
         fetch("http://localhost:8081/api/auth/signup", {
@@ -184,12 +183,6 @@ function Registration(){
                     name="emailnotifications" valuePropName="checked"
                 >
                     <Checkbox><span style={{marginLeft:"10px"}}>Enable email notifications</span></Checkbox>
-                </Form.Item>
-
-                <Form.Item 
-                    name="privacytoggle" valuePropName="checked"
-                >
-                    <Checkbox><span style={{marginLeft:"10px"}}>Private account</span></Checkbox>
                 </Form.Item>
 
                 <Form.Item>

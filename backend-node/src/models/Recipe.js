@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 const recipeSchema = new Schema({
     recipeID: { type: Number, required: true, unique: true,  default: Date.now},
     userName: { type: mongoose.Schema.Types.String, required: true, ref: "User"},
+    recipePrivacy: {type: String, required: true, maxLength: 150},
+    recipeType: {type: String, required: true, maxLength: 75},
     recipeName: { type: String, required: true, maxLength: 75 },
     recipeDescription: { type: String, required: true, maxLength: 300 },
     recipeSteps: [{}],

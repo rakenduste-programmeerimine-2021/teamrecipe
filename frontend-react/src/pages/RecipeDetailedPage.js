@@ -12,6 +12,8 @@ function RecipePage(){
     let rows;
     let steps = [];
 
+    console.log(data)
+
     useEffect(() => {
         fetch("http://localhost:8081/api/recipe/" + recipeID
         ).then((response) => {
@@ -34,10 +36,11 @@ function RecipePage(){
                 <img src={data.imageURL} width="300" height="300" style={{marginBottom: "10px"}}/>
                 <h1 style={{fontWeight:"700"}}>{data.recipeName} <Tooltip title="Edit recipe" placement="right"><Link to={data.recipeID + `/edit`}><Button style={{border:"none"}} icon={<EditOutlined />} shape="circle"></Button></Link></Tooltip></h1>
                 <p><b>Author: {data.userName}</b></p>
-                <p>{data.recipeDescription}</p>
+                <p><b>Recipe Type:</b><br/> {data.recipeType}</p>
+                <p><b>Recipe Description:</b><br/> {data.recipeDescription}</p>
                 <Table dataSource={rows} columns={columns} size="small" pagination="false"/>
                 {steps}
-                
+                <p><b>Recipe privacy: </b><br/>{data.recipePrivacy}</p>
             </>
             )
         } else {

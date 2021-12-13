@@ -1,0 +1,3 @@
+profiili edit - updateb ainult kas nimi, email või username VÕI updateb kõik koos parooliga
+ei suuda eraldi neid toime panna - proovi ise
+AccountPagePasswordEdit.js oli tehtud, et eraldada inputid kindluse jaoks aga ei toiminud ka see

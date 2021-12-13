@@ -23,6 +23,8 @@ exports.createRecipe = async (req, res) => {
   const newRecipe = new Recipe ({
     "userName": req.body.userName,
     "recipeName": req.body.recipeName,
+    "recipePrivacy": req.body.recipePrivacy,
+    "recipeType": req.body.recipeType,
     "recipeDescription": req.body.recipeDescription,
     "recipeSteps": req.body.recipeSteps,
     "recipeIngredients": req.body.recipeIngredients,
@@ -73,6 +75,8 @@ exports.updateRecipe = async (req, res) => {
     update = {
       "recipeName": req.body.recipeName,
       "recipeDescription": req.body.recipeDescription,
+      "recipePrivacy": req.body.recipePrivacy,
+      "recipeType": req.body.recipeType,
       "recipeSteps": req.body.recipeSteps,
       "recipeIngredients": req.body.recipeIngredients,
       "recipeIngredientAmount": req.body.recipeIngredientAmount,
@@ -82,6 +86,8 @@ exports.updateRecipe = async (req, res) => {
     update = {
       "recipeName": req.body.recipeName,
       "recipeDescription": req.body.recipeDescription,
+      "recipePrivacy": req.body.recipePrivacy,
+      "recipeType": req.body.recipeType,
       "recipeSteps": req.body.recipeSteps,
       "recipeIngredients": req.body.recipeIngredients,
       "recipeIngredientAmount": req.body.recipeIngredientAmount,
