@@ -114,10 +114,12 @@ function RecipePage(){
                         <>
                             <img src={data.imageURL} width="300" height="300" style={{marginBottom: "10px"}}/>
                             <h1 style={{fontWeight:"700"}}>{data.recipeName} <Tooltip title="Unlike" placement="right"><Button shape="circle" style={{border:"none"}} icon={<StarFilled/>} onClick={unLikeRecipe}></Button></Tooltip></h1>
-                            <Link to={`/user/${data.userName}`}><p style={{color:"black"}}><b>Author: {data.userName}</b></p></Link>
-                            <p>{data.recipeDescription}</p>
+                            <Link to={`/user/${data.userName}`}><p style={{color:"black"}}><b>Author: </b><br/>{data.userName}</p></Link>
+                            <p><b>Recipe Type:</b><br/> {data.recipeType}</p>
+                            <p><b>Recipe Description:</b><br/> {data.recipeDescription}</p>
                             <Table dataSource={rows} columns={columns} size="small" pagination="false"/>
                             {steps}
+                            <p><b>Recipe privacy: </b><br/>{data.recipePrivacy}</p>
                         </>
                     )
                 } else {
@@ -125,10 +127,12 @@ function RecipePage(){
                         <>
                             <img src={data.imageURL} width="300" height="300" style={{marginBottom: "10px"}}/>
                             <h1 style={{fontWeight:"700"}}>{data.recipeName} <Tooltip title="Like" placement="right"><Button shape="circle" style={{border:"none"}} icon={<StarOutlined/>} onClick={likeRecipe}></Button></Tooltip></h1>
-                            <Link to={`/user/${data.userName}`}><p style={{color:"black"}}><b>Author: {data.userName}</b></p></Link>
-                            <p>{data.recipeDescription}</p>
+                            <Link to={`/user/${data.userName}`}><p style={{color:"black"}}><b>Author: </b><br/>{data.userName}</p></Link>
+                            <p><b>Recipe Type:</b><br/> {data.recipeType}</p>
+                            <p><b>Recipe Description:</b><br/> {data.recipeDescription}</p>
                             <Table dataSource={rows} columns={columns} size="small" pagination="false"/>
                             {steps}
+                            <p><b>Recipe privacy: </b><br/>{data.recipePrivacy}</p>
                         </>
                     )
                 }
@@ -137,10 +141,12 @@ function RecipePage(){
                     <>
                         <img src={data.imageURL} width="300" height="300" style={{marginBottom: "10px"}}/>
                         <h1 style={{fontWeight:"700"}}>{data.recipeName}</h1>
-                        <Link to={`/user/${data.userName}`}><p style={{color:"black"}}><b>Author: {data.userName}</b></p></Link>
-                        <p>{data.recipeDescription}</p>
+                        <Link to={`/user/${data.userName}`}><p style={{color:"black"}}><b>Author: </b><br/>{data.userName}</p></Link>
+                        <p><b>Recipe Type:</b><br/> {data.recipeType}</p>
+                        <p><b>Recipe Description:</b><br/> {data.recipeDescription}</p>
                         <Table dataSource={rows} columns={columns} size="small" pagination="false"/>
                         {steps}
+                        <p><b>Recipe privacy: </b><br/>{data.recipePrivacy}</p>
                     </>
                 )
                 

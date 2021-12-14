@@ -31,7 +31,7 @@ function CookbookPage(){
         if(key == 1){
             return (
                 <div>
-                    <h1 style={{fontWeight:"700"}}>Your followed recipes</h1>
+                    <h1 style={{fontWeight:"700"}}>Your followed users' recipes</h1>
                     <Dropdown overlay={menu} placement="bottomCenter">
                     <b style={{cursor: "pointer", marginBottom: "10px"}} className="ant-dropdown-link" onClick={e => e.preventDefault()}>
                         Filter <DownOutlined />

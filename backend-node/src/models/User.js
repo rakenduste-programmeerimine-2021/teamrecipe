@@ -7,7 +7,6 @@ const userSchema = new Schema({
     firstName: { type: String, required: true, maxLength: 75 },
     lastName: { type: String, required: true, maxLength: 75 },
     profilePictureURL: { type: String },
-    privacyToggle: { type: Boolean, required: true },
     emailNotifications: { type: Boolean, required: true },
     followedUsers: [{}],
     likedRecipeIDs: [{}],
