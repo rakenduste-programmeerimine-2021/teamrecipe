@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Context } from "../store";
-import { Button, Form, Input, Upload, message, Card } from "antd";
+import { Button, Form, Input, Upload, message, Card, Checkbox, Select } from "antd";
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { addRecipe } from "../store/actions";
 import "./pageStyles.css"
@@ -15,9 +15,6 @@ function RecipeCreate(){
     const [fileList, setFileList] = useState({...initialState});
     const newRecipeData = new FormData()
 
-    /*useEffect(() => {
-
-    }, [])*/
 
     const onFinish = (values) => {
         createFormData(values);
@@ -40,6 +37,8 @@ function RecipeCreate(){
     const createFormData = (values) => {
         newRecipeData.append("userName", state.auth.username)
         newRecipeData.append("recipeName", values.recipeName)
+        newRecipeData.append("recipePrivacy", values.recipePrivacy)
+        newRecipeData.append("recipeType", values.recipeType)
         newRecipeData.append("recipeDescription", values.recipeDescription)
         for(var i=0; i<values.recipeIngredients.length; i++){
             newRecipeData.append("recipeIngredients", values.recipeIngredients[i].ingredient)
@@ -114,6 +113,26 @@ function RecipeCreate(){
                     >
                         <Input/>
                     </Form.Item>
+                    <h1 style={{marginTop: "10px"}}>Type of Recipe</h1>
+                    <Form.Item 
+                        name="recipeType"
+                        rules={[
+                            {
+                                required: true,
+                                whitespace: true,
+                            }
+                        ]}
+                    >
+                        <Select>
+                            <Select.Option value="Chicken">Chicken</Select.Option>
+                            <Select.Option value="Beef">Beef</Select.Option>
+                            <Select.Option value="Vegan">Vegan</Select.Option>
+                            <Select.Option value="Fish">Fish</Select.Option>
+                            <Select.Option value="Vegetarian">Vegetarian</Select.Option>
+                            <Select.Option value="Other">Other</Select.Option>
+                        </Select>
+                    </Form.Item>
+
                     <h1 style={{marginTop: "10px"}}>Description</h1>
                     <Form.Item 
                         name="recipeDescription"
@@ -257,6 +276,23 @@ function RecipeCreate(){
                         </>
                         )}
                     </Form.List>
+
+                    <h1 style={{marginTop: "10px"}}>Would you like to share this recipe with others?<br/>(Show this recipe on the main page)</h1>
+                    <Form.Item 
+                        name="recipePrivacy"
+                        rules={[
+                            {
+                                required: true,
+                                whitespace: true,
+                            }
+                        ]}
+                    >
+                        <Select>
+                            <Select.Option value="Private">Private</Select.Option>
+                            <Select.Option value="Shared">Shared</Select.Option>
+
+                        </Select>
+                    </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
                         Submit

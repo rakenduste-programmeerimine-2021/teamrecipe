@@ -62,12 +62,13 @@ function SearchPage(){
                 <div>
                     <br/>
                     {filteredData.map((value, index) =>(
-                        <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", padding: "10px", borderRadius: "5px", display: "", marginBottom: "10px", textAlign: "left", minWidth:"800px", maxWidth:"800px"}} key={index}>
+                        <div style={{backgroundColor: "rgb(240, 240, 240)", paddingTop: "5px", minHeight:"170px", minWidth:"400px", padding: "10px", borderRadius: "5px", display: "", marginBottom: "10px", textAlign: "left"}} key={index}>
+                            <Link to={`/recipes/${value.recipeID}`}><img src={value.imageURL} width="150" height="150" style={{ float: "left", marginRight: "10px", cursor: "pointer"}}/></Link>
                             <Link to={`/recipes/${value.recipeID}`}>
-                            <b style={{color:"black"}}>{value.recipeName}</b>
+                            <h2 style={{color:"black"}}>{value.recipeName}</h2>
                             </Link>
-                            <Link to={`/user/`}>
-                            <p style={{color:"black"}}>author: {value.userName}</p>
+                            <Link to={`/account`}>
+                            <p style={{color:"black"}}><b>Author:</b> {value.userName}</p>
                             </Link>
                             <p>{value.recipeDescription}</p>
                         </div>

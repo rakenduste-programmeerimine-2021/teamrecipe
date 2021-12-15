@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Recipes from "../components/Recipes";
 
 function RecipePage(){

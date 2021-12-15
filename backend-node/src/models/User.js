@@ -6,9 +6,10 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     firstName: { type: String, required: true, maxLength: 75 },
     lastName: { type: String, required: true, maxLength: 75 },
-    profilePicture: { type: String },
-    privacyToggle: { type: Boolean, required: true },
+    profilePictureURL: { type: String },
     emailNotifications: { type: Boolean, required: true },
+    followedUsers: [{}],
+    likedRecipeIDs: [{}],
     createdAt: { type: Date, default: Date.now }
 });
 
