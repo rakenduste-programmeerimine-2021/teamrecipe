@@ -39,7 +39,8 @@ function FollowedRecipes(){
                 <Link to={`/user/${recipe.userName}`}>
                 <p style={{color:"black"}}><b>Author:</b> {recipe.userName}</p>
                 </Link>
-                <p>{recipe.recipeDescription}</p>
+                <p><b>Recipe Type: </b>{recipe.recipeType}</p>
+                <p><b>Description: </b>{recipe.recipeDescription}</p>
             </div>
         )
     }

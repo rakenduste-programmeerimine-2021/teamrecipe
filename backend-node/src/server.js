@@ -41,3 +41,6 @@ mongoose
         console.log(err)
         process.exit(1)
 })
+
+const server = app;
+module.exports = server;

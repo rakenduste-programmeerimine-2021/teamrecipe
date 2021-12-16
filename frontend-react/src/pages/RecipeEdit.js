@@ -38,7 +38,9 @@ function RecipeEdit(){
                 recipeName: data.recipeName,
                 recipeDescription: data.recipeDescription,
                 recipeIngredientField: mappedIngredients,
-                recipeSteps: data.recipeSteps
+                recipeSteps: data.recipeSteps,
+                recipeType: data.recipeType,
+                recipePrivacy: data.recipePrivacy
             });
         }).catch(error => {
             message.error(error.toString());
@@ -78,7 +80,7 @@ function RecipeEdit(){
             newRecipeData.append("userName", state.auth.username)
             newRecipeData.append("recipeName", values.recipeName)
             newRecipeData.append("recipeType", values.recipeType)
-            newRecipeData.append("privacyToggle", values.privacyToggle)
+            newRecipeData.append("recipePrivacy", values.recipePrivacy)
             newRecipeData.append("recipeDescription", values.recipeDescription)
             for(var i=0; i<values.recipeIngredientField.length; i++){
                 newRecipeData.append("recipeIngredients", values.recipeIngredientField[i].ingredient)
@@ -95,7 +97,7 @@ function RecipeEdit(){
             newRecipeData.append("userName", state.auth.username)
             newRecipeData.append("recipeName", values.recipeName)
             newRecipeData.append("recipeType", values.recipeType)
-            newRecipeData.append("privacyToggle", values.privacyToggle)
+            newRecipeData.append("recipePrivacy", values.recipePrivacy)
             newRecipeData.append("recipeDescription", values.recipeDescription)
             for(var i=0; i<values.recipeIngredientField.length; i++){
                 newRecipeData.append("recipeIngredients", values.recipeIngredientField[i].ingredient)
@@ -189,21 +191,6 @@ function RecipeEdit(){
                         </Upload>
                     </Form.Item>
                 </div>
-                    <h1 style={{marginTop: "10px"}}>Would you like to share this recipe with others?<br/>(Show this recipe on the main page)</h1>
-                    <Form.Item 
-                        name="recipePrivacy"
-                        rules={[
-                            {
-                                required: true,
-                                whitespace: true,
-                            }
-                        ]}
-                    >
-                        <Select>
-                            <Select.Option value="Private">Private</Select.Option>
-                            <Select.Option value="Shared">Shared</Select.Option>
-                        </Select>
-                    </Form.Item>
                     <h1 style={{marginTop: "10px"}}>Recipe name</h1>
                     <Form.Item
                         name="recipeName"
@@ -385,6 +372,21 @@ function RecipeEdit(){
                         </>
                         )}
                     </Form.List>
+                    <h1 style={{marginTop: "10px"}}>Would you like to share this recipe with others?<br/>(Show this recipe on the main page)</h1>
+                    <Form.Item 
+                        name="recipePrivacy"
+                        rules={[
+                            {
+                                required: true,
+                                whitespace: true,
+                            }
+                        ]}
+                    >
+                        <Select>
+                            <Select.Option value="Private">Private</Select.Option>
+                            <Select.Option value="Shared">Shared</Select.Option>
+                        </Select>
+                    </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
                         Submit
