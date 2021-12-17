@@ -71,7 +71,7 @@ function Registration(){
                     },
                     ]}
                 >
-                    <Input size="default"/>
+                    <Input type="text" size="default"/>
                 </Form.Item>
 
                 <h1>Firstname</h1>
@@ -90,7 +90,7 @@ function Registration(){
                     },
                     ]}
                 >
-                    <Input/>
+                    <Input type="text"/>
                 </Form.Item>
 
                 <h1>Lastname</h1>
@@ -109,7 +109,7 @@ function Registration(){
                     },
                     ]}
                 >
-                    <Input/>
+                    <Input type="text"/>
                 </Form.Item>
 
                 <h1>Email</h1>
@@ -126,7 +126,7 @@ function Registration(){
                     },
                     ]}
                 >
-                    <Input/>
+                    <Input type="text"/>
                 </Form.Item>
 
                 <h1>Password</h1>

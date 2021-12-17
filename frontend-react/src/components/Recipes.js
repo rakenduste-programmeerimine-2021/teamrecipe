@@ -73,13 +73,13 @@ function Recipes(){
             <h1 style={{fontWeight:"700"}}>Recipes</h1>
             <div>
                 <div>
-                        {/* <Select mode="tags" style={{width:"50%"}} placeholder="Select filters for recipes">
+                        <Select mode="tags" style={{width:"50%"}} placeholder="Select filters for recipes">
                         {recipes.map((recipe) => (
-                            <Option value = {Option}>{recipe.recipeType}</Option>
+                            <Option value={Option}>{recipe.recipeType}</Option>
                         ))}
                         </Select>
                         <br/>
-                        <br/> */}
+                        <br/>
                     {recipes.map((recipe, index) =>(
                         checkAccount(recipe, index)
                     ))}

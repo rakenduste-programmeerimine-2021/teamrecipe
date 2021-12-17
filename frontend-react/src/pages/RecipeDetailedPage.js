@@ -104,7 +104,7 @@ function RecipePage(){
                 <p>{data.recipeDescription}</p>
                 <Table dataSource={rows} columns={columns} size="small" pagination="false"/>
                 {steps}
-                
+                <p><b>Recipe privacy: </b><br/>{data.recipePrivacy}</p>
             </>
             )
         } else {
@@ -119,7 +119,6 @@ function RecipePage(){
                             <p><b>Recipe Description:</b><br/> {data.recipeDescription}</p>
                             <Table dataSource={rows} columns={columns} size="small" pagination="false"/>
                             {steps}
-                            <p><b>Recipe privacy: </b><br/>{data.recipePrivacy}</p>
                         </>
                     )
                 } else {
@@ -132,7 +131,6 @@ function RecipePage(){
                             <p><b>Recipe Description:</b><br/> {data.recipeDescription}</p>
                             <Table dataSource={rows} columns={columns} size="small" pagination="false"/>
                             {steps}
-                            <p><b>Recipe privacy: </b><br/>{data.recipePrivacy}</p>
                         </>
                     )
                 }
@@ -146,7 +144,6 @@ function RecipePage(){
                         <p><b>Recipe Description:</b><br/> {data.recipeDescription}</p>
                         <Table dataSource={rows} columns={columns} size="small" pagination="false"/>
                         {steps}
-                        <p><b>Recipe privacy: </b><br/>{data.recipePrivacy}</p>
                     </>
                 )
                 

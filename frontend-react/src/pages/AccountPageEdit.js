@@ -43,23 +43,35 @@ function AccountPageEdit(){
         });
     }, [])
 
-        const displayError = (error) => {
-    message.error(error.toString());
-  }
+    const displayError = (error) => {
+        message.error(error.toString());
+    }
 
     const onFinish = (values) => {
+        var update = {};
         if(values.emailnotifications == undefined){
             values.emailnotifications = false; 
         }
-        const update = {
-            userName: values.userName,
-            email: values.email,
-            firstName: values.firstName,
-            lastName: values.lastName,
-            password: values.password,
-            passwordConfirmation: values.passwordConfirmation,
-            emailNotifications: values.emailnotifications
-        };
+        if(values.password != undefined){
+            update = {
+                userName: values.userName,
+                email: values.email,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                password: values.password,
+                passwordConfirmation: values.passwordConfirmation,
+                emailNotifications: values.emailnotifications
+            };
+        } else {
+            update = {
+                userName: values.userName,
+                email: values.email,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                passwordConfirmation: values.passwordConfirmation,
+                emailNotifications: values.emailnotifications
+            };
+        }
         fetch(`http://localhost:8081/api/auth/${user.userName}`, {
             method: "PUT",
             body: JSON.stringify(update),
@@ -179,6 +191,56 @@ function AccountPageEdit(){
                     ]}
                 >
                     <Input/>
+                </Form.Item>
+
+                <h1>New Password</h1>
+                <Form.Item
+                    name="password"
+                    rules={[
+                    {
+                        required: false,
+                        message: 'Please input your password!',
+                    },
+                    {
+                        pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
+                        message: "Password must contain atleast: 1 lowercase letter, 1 uppercase letter, 1 number"
+                    },
+                    {
+                        min: 6,
+                        message: 'Minimum length is 6 characters!',
+                    }
+                    ]}
+                    hasFeedback
+                >
+                    <Input.Password/>
+                </Form.Item>
+
+                <h1>Confirm New Password</h1>
+                <Form.Item
+                    name="confirm"
+                    dependencies={['password']}
+                    hasFeedback
+                    rules={[
+                    {
+                        required: false,
+                        message: 'Please confirm your password!',
+                    },
+                    {
+                        min: 6,
+                        message: 'Minimum length is 6 characters!',
+                    },
+                    ({ getFieldValue }) => ({
+                        validator(_, value) {
+                        if (!value || getFieldValue('password') === value) {
+                            return Promise.resolve();
+                        }
+
+                        return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                        },
+                    }),
+                    ]}
+                >
+                    <Input.Password/>
                 </Form.Item>
 
                 <Form.Item 
